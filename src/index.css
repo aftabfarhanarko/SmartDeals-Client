@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
+
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: light --default;
+}
+
+;
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: rgba(159, 98, 242, 1);
+  --color-secondary: bg-gradient-to-r from-[#632EE3] to-[#9F62F2];
+}
+.btn-primary{
+  @apply bg-gradient-to-r from-[#632EE3] to-[#9F62F2] border-none text-white font-semibold; 
+}
+
+.btn-primary:hover{
+  @apply opacity-90;
+}
+
+a.active {
+  color: rgba(159, 98, 242, 1);
+}
+
+* {
+  font-family: "Lexend", sans-serif;
+  font-optical-sizing: auto;
+}
