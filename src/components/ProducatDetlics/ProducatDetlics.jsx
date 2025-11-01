@@ -9,7 +9,7 @@ import BidesProducat from "./BidesProducat";
 const ProducatDetlics = () => {
   const producat = useLoaderData();
   const { user } = useContext(AuthContex);
-  const [bides, setBides] = useState(null);
+  const [bides, setBides] = useState([]);
   const sdhsh = producat.created_at;
   const tashdo = new Date(sdhsh);
   const formatted = tashdo.toISOString().split("T")[0]; // "2025-10-29"
@@ -34,7 +34,7 @@ const ProducatDetlics = () => {
     const email = e.target.email.value;
     const name = e.target.name.value;
     const images = e.target.imges.value;
-    const price = e.target.price.value;
+    const price = Number(e.target.price.value);
     console.log({ email, price, name, images });
     const producatID = producat._id;
     console.log(producatID);
@@ -472,7 +472,7 @@ const ProducatDetlics = () => {
 
         <div className="py-20">
           <h2 className="text-3xl font-semibold text-purple-600 mt-2">
-            Bids For This Products:{""}
+            Bids For This Products: {bides?.length}
           </h2>
 
           <div className="overflow-x-auto shadow">
@@ -491,7 +491,7 @@ const ProducatDetlics = () => {
               <tbody>
                 {/* row 1 */}
                 {bides?.map((bid, index) => (
-                  <tr>
+                  <tr key={index}>
                     <th>{index + 1}</th>
                     <td>
                       <div className="flex items-center gap-3">
