@@ -3,6 +3,7 @@ import { GoArrowLeft } from "react-icons/go";
 import { Link, useLoaderData } from "react-router";
 import { AuthContex } from "../../Context/AuthContex";
 import { IoClose } from "react-icons/io5";
+import Swal from "sweetalert2";
 
 const ProducatDetlics = () => {
   const producat = useLoaderData();
@@ -23,8 +24,41 @@ const ProducatDetlics = () => {
     const name = e.target.name.value;
     const images = e.target.imges.value;
     const price = e.target.price.value;
-    const conteact = e.target.info.value;
-    console.log({ email, price, name, images, conteact });
+    console.log({ email, price, name, images });
+    const producatID = producat._id;
+    console.log(producatID);
+
+    const bidesProducat = {
+      producatIDS: producatID,
+      byer_image: images,
+      byer_name: name,
+      byer_email: email,
+      bid_price: price,
+      status: "pending",
+    };
+
+    fetch("http://localhost:3000/bids", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(bidesProducat),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("After The Data Inseart Of tHe producat in MongoDB", data);
+        if (data.insertedId) {
+          refrence.current.close();
+          e.target.reset();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your Bids has been Places",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+        }
+      });
   };
   return (
     <div className="bg-base-200 py-15">
@@ -415,9 +449,9 @@ const ProducatDetlics = () => {
         </div>
 
         {/* Product Description Section */}
-        
+
         <div className="py-20">
-            <h1 className="text-3xl font-bold"> Bids For This Products: 03</h1>
+          <h1 className="text-3xl font-bold"> Bids For This Products: 03</h1>
         </div>
       </div>
     </div>
