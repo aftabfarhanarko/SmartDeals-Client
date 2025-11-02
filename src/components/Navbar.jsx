@@ -90,7 +90,7 @@ const Navbar = () => {
             <div>
               <Link to="/login">
                 {" "}
-                <button className="btn btn-outline btn-primary">Login</button>
+                <button className="btn btn-outline text-primary hover:bg-primary hover:text-white">Login</button>
               </Link>
               <Link to="/register">
                 {" "}
