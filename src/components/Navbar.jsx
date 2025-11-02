@@ -75,7 +75,7 @@ const Navbar = () => {
           ) : user ? (
             <div className="flex items-center">
              <div className="hidden  md:block ">
-               <div className="border p-0.5 border-gray-700 rounded-full">
+               <div className="">
                 <img className=" w-7 md:w-13 rounded-full" src={user.photoURL}></img>
               </div>
              </div>

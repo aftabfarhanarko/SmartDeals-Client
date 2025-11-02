@@ -71,7 +71,7 @@ const ProducatDetlics = () => {
           // add new bids
           bidesProducat._id = data.insertedId;
           const myState = [...bides, bidesProducat];
-          myState.sort((a,b) => b.bid_price - a.bid_price)
+          myState.sort((a, b) => b.bid_price - a.bid_price);
           setBides(myState);
         }
       });
@@ -272,17 +272,20 @@ const ProducatDetlics = () => {
                   </div>
                   <div className="flex">
                     <span className="font-semibold text-gray-700 w-24 flex gap-2">
-                      Contact: <span className="text-sm font-medium">{producat.seller_contact}</span>
+                      Contact:{" "}
+                      <span className="text-sm font-medium">
+                        {producat.seller_contact}
+                      </span>
                     </span>
                     <span className="text-gray-600">{""}</span>
                   </div>
                   <div className="flex items-center">
                     <span className="font-semibold text-gray-700 w-24 flex gap-2">
-                      Status: <span className="inline-block px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-semibold rounded-full">
-                      {producat.status}
+                      Status:{" "}
+                      <span className="inline-block px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-semibold rounded-full">
+                        {producat.status}
+                      </span>
                     </span>
-                    </span>
-                    
                   </div>
                 </div>
               </div>
@@ -480,8 +483,8 @@ const ProducatDetlics = () => {
               <thead>
                 <tr>
                   <th>SL No</th>
-                  <th>Byer Name</th>
-                  <th>Byer Email</th>
+                  <th>Producat</th>
+                  <th>Bider Info</th>
                   <th>Bid Price</th>
                   <th>Actions</th>
                 </tr>
@@ -497,26 +500,45 @@ const ProducatDetlics = () => {
                         <div className="avatar">
                           <div className="mask mask-squircle h-12 w-12">
                             <img
-                              src={bid.byer_image ? bid.byer_image : "No Img"}
+                              src={producat.image }
                               alt="No Img"
                             />
                           </div>
+                            
+                          </div>
+                          <div>
+                            <p className="text-md  font-semibold">{producat.title}</p>
+                            <p className="font-medium">${producat.price_min}-{producat.price_max}</p>
                         </div>
-                        <div>
-                          <p className="font-bold"> {bid.byer_name}</p>
-                        </div>
+                        
                       </div>
                     </td>
-                    <td>
-                      <span className="badge badge-ghost badge-sm">
-                        {bid.byer_email}
-                      </span>
+
+                    <td className="flex items-center">
+                      <div className="mask mask-squircle h-12 w-12">
+                        <img
+                          src={bid.byer_image ? bid.byer_image : "No Img"}
+                          alt="No Img"
+                        />
+                      </div>
+
+                      <div>
+                        <p className="font-semibold ml-2.5"> {bid.byer_name}</p>
+                        <span className="badge badge-ghost badge-sm">
+                          {bid.byer_email}
+                        </span>
+                      </div>
                     </td>
                     <td>
                       $<span>{bid.bid_price}</span>
                     </td>
-                    <th>
-                      <button className="btn btn-ghost btn-xs">details</button>
+                    <th className="flex items-center mt-3 md:mt-3">
+                      <button className="btn btn-outline  text-green-600  btn-xs hover:border-green-600 ">
+                        Accept Offer
+                      </button>
+                      <button className="btn ml-2 btn-outline  text-red-600  btn-xs hover:border-red-600 ">
+                        Reject offer
+                      </button>
                     </th>
                   </tr>
                 ))}
