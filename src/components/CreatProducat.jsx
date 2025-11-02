@@ -1,49 +1,73 @@
+import { useContext } from "react";
+import { AuthContex } from "../Context/AuthContex";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const CreatProducat = () => {
+  const { user } = useContext(AuthContex);
+  const naviget = useNavigate()
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const title = e.target.title.value;
-    const category = e.target.category.value;
+    const category = e.target.owenSteats.value;
+
     const price_min = e.target.minPrice.value;
     const price_max = e.target.maxPrice.value;
-    const newProducat = e.target.conditionNew.value;
-    const usedProducat = e.target.conditionUsed.value;
-    const usage = e.target.usageTime.value;
+    const created_at = new Date();
     const image = e.target.imageUrl.value;
+    const location = e.target.location.value;
+    const seller_image = e.target.sellerImageUrl.value;
     const seller_name = e.target.sellerName.value;
     const seller_email = e.target.sellerEmail.value;
-    const sellerContact = e.target.sellerContact.value;
-    const sellerImageUrl = e.target.sellerImageUrl.value;
-    const location = e.target.location.value;
+    const usage = e.target.usageTime.value;
     const description = e.target.description.value;
+    const seller_contact = e.target.sellerContact.value;
+    const status = e.target.mystutase.value;
+    const condition = e.target.condition.value;
 
-    console.log({
+    const insertData = {
       title,
       category,
       price_min,
       price_max,
-      newProducat,
-      usedProducat,
       usage,
       image,
       seller_email,
       seller_name,
-      sellerContact,
-      sellerImageUrl,
       location,
-      description
-    })
+      description,
+      created_at,
+      seller_image,
+      seller_contact,
+      status,
+      condition,
+    };
 
+    fetch("http://localhost:3000/producat", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(insertData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Save Database",
+            icon: "success",
+            draggable: true,
+          });
+          e.target.reset();
+          naviget("/allproduct")
+        }
+      });
   };
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100  px-4 sm:px-6 lg:px-8 py-19">
       <div className="max-w-3xl mx-auto">
-        {/* Header */}
-        <button className="flex items-center text-gray-600 hover:text-gray-900 mb-6 transition-colors">
-          {/* <ArrowLeft className="w-5 h-5 mr-2" /> */}
-          <span className="font-medium">Back To Products</span>
-        </button>
-
         {/* Title */}
         <h1 className="text-4xl font-bold text-center mb-8">
           Create <span className="text-purple-600">A Product</span>
@@ -65,13 +89,10 @@ const CreatProducat = () => {
                   type="text"
                   id="title"
                   name="title"
+                  required
                   placeholder="e.g. Yamaha Fz Guitar for Sale"
                   className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all`}
                 />
-                {/* ${
-                    errors.title ? 'border-red-500' : 'border-gray-300'
-                  }
-                {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>} */}
               </div>
               <div>
                 <label
@@ -82,22 +103,19 @@ const CreatProducat = () => {
                 </label>
                 <select
                   id="category"
-                  name="category"
+                  name="owenSteats"
                   className={`w-full px-4 py-3 rounded-lg border  focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all bg-white`}
                 >
-                  {/* ${
-                    errors.category ? 'border-red-500' : 'border-gray-300'
-                  } */}
-                 <option value="" disabled>
-                Select category
-              </option>
-              <option value="Vehicles">Computers & Accessories</option>
-              <option value="Plants">Mobile & Accessories</option>
-              <option value="Foods">Gaming & Accessories</option>
-              <option value="Home & Living">Camera & Photography</option>
-              <option value="Characters">Audio Systems</option>
-              <option value="Space">Home Electronics</option>
-              <option value="Animals">Other Gadgets</option>
+                  <option value="" disabled>
+                    Select category
+                  </option>
+                  <option>Computers & Accessories</option>
+                  <option>Mobile & Accessories</option>
+                  <option>Gaming & Accessories</option>
+                  <option>Camera & Photography</option>
+                  <option>Audio Systems</option>
+                  <option>Home Electronics</option>
+                  <option>Other Gadgets</option>
                 </select>
               </div>
             </div>
@@ -114,11 +132,11 @@ const CreatProducat = () => {
                 <input
                   type="number"
                   name="minPrice"
+                  required
                   placeholder="e.g. 18.5"
                   step="0.01"
                   className={`w-full focus:outline-none  px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all`}
                 />
-               
               </div>
 
               <div>
@@ -131,6 +149,7 @@ const CreatProducat = () => {
                 <input
                   type="number"
                   name="maxPrice"
+                  required
                   placeholder="Max Price"
                   step="0.01"
                   className="w-full focus:outline-none  px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
@@ -141,27 +160,27 @@ const CreatProducat = () => {
             {/* Condition and Usage Time Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Product Condition
+                <label
+                  htmlFor="category"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Condition
                 </label>
-                <div className="flex gap-4">
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="conditionNew"
-                      className="w-4 h-4 text-purple-600 border-gray-300 focus:outline-none focus:ring-purple-500"
-                    />
-                    <span className="ml-2 text-gray-700">Brand New</span>
-                  </label>
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="conditionUsed"
-                      className="w-4 h-4 text-purple-600 border-gray-300 focus:ring-purple-500"
-                    />
-                    <span className="ml-2 text-gray-700">Used</span>
-                  </label>
-                </div>
+                <select
+                  id="category"
+                  name="condition"
+                  required
+                  className={`w-full px-4 py-3 rounded-lg border  focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all bg-white`}
+                >
+                  {/* ${
+                    errors.category ? 'border-red-500' : 'border-gray-300'
+                  } */}
+                  <option value="Select Usede" disabled>
+                    Select Usede
+                  </option>
+                  <option>used</option>
+                  <option>Brand New</option>
+                </select>
               </div>
 
               <div>
@@ -175,6 +194,7 @@ const CreatProducat = () => {
                   type="text"
                   id="usageTime"
                   name="usageTime"
+                  required
                   placeholder="e.g. 1 year 3 month"
                   className="w-full focus:outline-none  px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 />
@@ -190,13 +210,12 @@ const CreatProducat = () => {
                 Your Product Image URL
               </label>
               <input
-                type="url"
-                id="imageUrl"
+                // type="url"
                 name="imageUrl"
-                placeholder="https://..."
+                required
+                placeholder="Your producat imge"
                 className={`w-full focus:outline-none  px-4 py-3 rounded-lg border focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all`}
               />
-            
             </div>
 
             {/* Seller Name and Email Row */}
@@ -211,10 +230,10 @@ const CreatProducat = () => {
                 <input
                   type="text"
                   name="sellerName"
+                  required
                   placeholder="e.g. Artisan Hustlers"
                   className={`w-full px-4 py-3 rounded-lg border  focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none transition-all`}
                 />
-             
               </div>
 
               <div>
@@ -228,10 +247,10 @@ const CreatProducat = () => {
                   type="email"
                   id="sellerEmail"
                   name="sellerEmail"
+                  required
                   placeholder="lei13155@nlnlord.com"
                   className={`w-full px-4 py-3 rounded-lg border  focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none  transition-all`}
                 />
-               
               </div>
             </div>
 
@@ -250,7 +269,6 @@ const CreatProducat = () => {
                   placeholder="e.g. +1-555-1234"
                   className={`w-full px-4 py-3 rounded-lg border  focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none transition-all`}
                 />
-               
               </div>
 
               <div>
@@ -264,32 +282,56 @@ const CreatProducat = () => {
                   type="url"
                   id="sellerImageUrl"
                   name="sellerImageUrl"
-                  placeholder="https://..."
+
+                  disabled
+                  defaultValue={user.photoURL}
                   className="w-full px-4 py-3 rounded-lg border  focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none transition-all"
                 />
               </div>
             </div>
 
             {/* Location */}
-            <div>
-              <label
-                htmlFor="location"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Location
-              </label>
-              <input
-                type="text"
-                id="location"
-                name="location"
-                placeholder="City, Country"
-                className={`w-full px-4 py-3 rounded-lg border 
-            border-red-500  border-gray-300
-                focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all`}
-              />
-             
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
+              <div>
+                <label
+                  htmlFor="location"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Status
+                </label>
+                <select
+                  id="category"
+                  name="mystutase"
+                  className={`w-full px-4 py-3 rounded-lg border  focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all bg-white`}
+                >
+                  <option value="" disabled>
+                    Select category
+                  </option>
+                  <option>pending</option>
+                  <option>Success</option>
+                </select>
+              </div>
 
+              <div>
+                <label
+                  htmlFor="location"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Location
+                </label>
+                <input
+                  type="text"
+                  id="location"
+                  name="location"
+                  required
+
+                  placeholder="City, Country"
+                  className={`w-full px-4 py-3 rounded-lg border 
+            border-black  focus:outline-none 
+                focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all`}
+                />
+              </div>
+            </div>
             {/* Description */}
             <div>
               <label
@@ -305,7 +347,6 @@ const CreatProducat = () => {
                 rows={4}
                 className="w-full px-4 py-3 rounded-lg border  focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none transition-all"
               />
-             
             </div>
 
             {/* Submit Button */}
