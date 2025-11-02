@@ -12,11 +12,12 @@ const Root = () => {
   }
   return (
     <div>
-      <nav className="bg-base-100 shadow-sm">
+      <nav className="bg-base-100 shadow-sm ">
         <Navbar></Navbar>
       </nav>
+      <div className="h-[85px]"> </div>
 
-      <main>
+      <main className="  ">
         <Outlet></Outlet>
       </main>
       <footer>

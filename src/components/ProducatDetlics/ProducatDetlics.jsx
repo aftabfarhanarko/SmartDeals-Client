@@ -477,7 +477,7 @@ const ProducatDetlics = () => {
             Bids For This Products: {bides?.length}
           </h2>
 
-          <div className="overflow-x-auto shadow">
+          <div className="overflow-x-auto shadow mt-10 rounded-lg">
             <table className="table">
               {/* head */}
               <thead>
