@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 
-import { IoIosSearch } from "react-icons/io";
 import RecentProducat from "../components/RecentProducat/RecentProducat";
 import { HashLoader } from "react-spinners";
 import Hero from "../components/Hero/Hero";

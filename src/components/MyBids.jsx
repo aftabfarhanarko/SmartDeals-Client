@@ -3,22 +3,21 @@ import { AuthContex } from "../Context/AuthContex";
 import Swal from "sweetalert2";
 
 const MyBids = () => {
-  const { user } = useContext(AuthContex);
-  const [deltet, setDeltet] = useState([]);
+  const { user,email } = useContext(AuthContex);
+  const [bidesData, setBidesData] = useState([]);
 
   useEffect(() => {
     if (user.email) {
-      fetch(`http://localhost:3000/bids?byer_email=${user.email}`)
+      fetch(`http://localhost:3000/bids`)
         .then((res) => res.json())
         .then((data) => {
           console.log("This is ", data);
-          setDeltet(data);
+          setBidesData(data);
         });
     }
-  }, [user.email]);
+  }, [email]);
 
-  console.log(deltet.byer_image);
-
+   console.log(user)
   const handelDelet = (_id) => {
     // console.log("Delet Now Buttons");
     Swal.fire({
@@ -69,7 +68,7 @@ const MyBids = () => {
 
           <tbody>
             {/* row 1 */}
-            {deltet?.map((bid, index) => (
+            {bidesData?.map((bid, index) => (
               <tr key={index}>
                 <th>{index + 1}</th>
                 <td>
