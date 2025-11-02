@@ -265,24 +265,24 @@ const ProducatDetlics = () => {
                 {/* Seller Details */}
                 <div className="space-y-2 text-sm">
                   <div className="flex">
-                    <span className="font-semibold text-gray-700 w-24">
-                      Location:
+                    <span className="font-semibold text-gray-700  flex gap-2">
+                      Location: <span>{producat.seller_name}</span>
                     </span>
                     <span className="text-gray-600">{""}</span>
                   </div>
                   <div className="flex">
-                    <span className="font-semibold text-gray-700 w-24">
-                      Contact:
+                    <span className="font-semibold text-gray-700 w-24 flex gap-2">
+                      Contact: <span className="text-sm font-medium">{producat.seller_contact}</span>
                     </span>
                     <span className="text-gray-600">{""}</span>
                   </div>
                   <div className="flex items-center">
-                    <span className="font-semibold text-gray-700 w-24">
-                      Status:
+                    <span className="font-semibold text-gray-700 w-24 flex gap-2">
+                      Status: <span className="inline-block px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-semibold rounded-full">
+                      {producat.status}
                     </span>
-                    <span className="inline-block px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-semibold rounded-full">
-                      {status}
                     </span>
+                    
                   </div>
                 </div>
               </div>

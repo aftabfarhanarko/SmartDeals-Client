@@ -70,7 +70,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/mybids",
-        element: <MyBids></MyBids>,
+        element: <PrivetRouter><MyBids></MyBids></PrivetRouter>,
       },
       {
         path: "/creatProducat",
