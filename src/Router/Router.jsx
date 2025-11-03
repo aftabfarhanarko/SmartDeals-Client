@@ -17,12 +17,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <PrivetRouter>
-            {" "}
-            <Home></Home>
-          </PrivetRouter>
-        ),
+        element: <Home></Home>,
       },
 
       {
@@ -70,7 +65,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/mybids",
-        element: <PrivetRouter><MyBids></MyBids></PrivetRouter>,
+        element: (
+          <PrivetRouter>
+            <MyBids></MyBids>
+          </PrivetRouter>
+        ),
       },
       {
         path: "/creatProducat",

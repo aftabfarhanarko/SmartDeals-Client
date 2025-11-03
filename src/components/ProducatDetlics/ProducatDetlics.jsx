@@ -16,13 +16,17 @@ const ProducatDetlics = () => {
   const findesID = producat._id;
 
   useEffect(() => {
-    fetch(`http://localhost:3000/producat/bids/${findesID}`)
+    fetch(`http://localhost:3000/producat/bids/${findesID}`,{
+        headers:{
+          author: `Bearer ${user.accessToken}`
+        }
+    })
       .then((res) => res.json())
       .then((data) => {
         // console.log(data);
         setBides(data);
       });
-  }, [findesID]);
+  }, [findesID,user]);
 
   const handelModal = () => {
     refrence.current.showModal();

@@ -5,51 +5,66 @@ import {
   updateProfile,
   GoogleAuthProvider,
   signInWithPopup,
-  onAuthStateChanged ,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
 
 import { auth } from "../firebase/firebase.config";
 const provider = new GoogleAuthProvider();
-const AUthProvider = ({ children  }) => {
+const AUthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loding, setLoding] = useState(true);
 
-
   const userCreat = (email, password) => {
-    setLoding(true)
+    setLoding(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   const updeatUser = (updet) => {
-    setLoding(true)
+    setLoding(true);
     return updateProfile(auth.currentUser, updet);
   };
 
   const userLogin = (email, password) => {
-    setLoding(true)
+    setLoding(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   const googleLogin = () => {
-    setLoding(true)
+    setLoding(true);
     return signInWithPopup(auth, provider);
   };
 
   const logOutUser = () => {
-    setLoding(true)
+    setLoding(true);
     return signOut(auth);
-  }
+  };
 
   useEffect(() => {
     const unsybcripet = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-     setLoding(false)
+
+      if (currentUser) {
+        console.log("This is a CUrrent User", currentUser)
+        const logIndUser = {email:currentUser.email}
+        fetch(`http://localhost:3000/jseonToken`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body:JSON.stringify(logIndUser)
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("Data In Insart Of The JWT Tokens Cooking", data);
+          });
+      }
+      setLoding(false);
     });
 
     return () => {
-        unsybcripet()
+      unsybcripet();
     };
   }, []);
 
@@ -60,7 +75,7 @@ const AUthProvider = ({ children  }) => {
     loding,
     user,
     userLogin,
-    logOutUser
+    logOutUser,
   };
   return (
     <div>
