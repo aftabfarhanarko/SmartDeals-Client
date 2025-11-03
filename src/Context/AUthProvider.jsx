@@ -46,8 +46,7 @@ const AUthProvider = ({ children }) => {
       setUser(currentUser);
 
       if (currentUser) {
-        console.log("This is a CUrrent User", currentUser)
-        const logIndUser = {email:currentUser.email}
+        const logIndUser = {email:currentUser.email};
         fetch(`http://localhost:3000/jseonToken`, {
           method: "POST",
           headers: {
@@ -58,7 +57,10 @@ const AUthProvider = ({ children }) => {
           .then((res) => res.json())
           .then((data) => {
             console.log("Data In Insart Of The JWT Tokens Cooking", data);
+            localStorage.setItem("token", data.token)
           });
+      }else{
+        localStorage.removeItem("token")
       }
       setLoding(false);
     });
@@ -66,7 +68,7 @@ const AUthProvider = ({ children }) => {
     return () => {
       unsybcripet();
     };
-  }, []);
+  }, [user]);
 
   const authInfo = {
     userCreat,

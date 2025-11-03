@@ -8,13 +8,28 @@ const MyBids = () => {
   const [bidesData, setBidesData] = useState([]);
 
   // console.log(user.accessToken);
-  
+
+  // useEffect(() => {
+  //   if (user.email) {
+  //     fetch(`http://localhost:3000/bids?email=${user.email}`,{
+  //       headers:{
+  //         author: `Bearer ${user.accessToken}`
+  //       }
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log("Reques Data ", data);
+  //         setBidesData(data);
+  //       });
+  //   }
+  // }, [user.email]);
+
   useEffect(() => {
     if (user.email) {
-      fetch(`http://localhost:3000/bids?email=${user.email}`,{
-        headers:{
-          author: `Bearer ${user.accessToken}`
-        }
+      fetch(`http://localhost:3000/bids?email=${user.email}`, {
+        headers: {
+          author: `Bearer ${localStorage.getItem("token")}`,
+        },
       })
         .then((res) => res.json())
         .then((data) => {
