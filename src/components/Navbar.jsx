@@ -39,7 +39,7 @@ const Navbar = () => {
     setOpen(false);
   };
 
-  console.log(user);
+  // console.log(user);
 
   return (
     <div className="z-40 bg-white shadow py-2   fixed w-full">
