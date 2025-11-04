@@ -144,12 +144,20 @@ const Navbar = () => {
                   <NavLink to="/creatProducat" onClick={() => setOpen(false)}>
                     Create Product
                   </NavLink>
-                  <button
-                    onClick={handelLogOut}
-                    className="btn btn-outline text-primary hover:bg-primary hover:text-white"
-                  >
-                    Logout
-                  </button>
+                  {user ? (
+                    <button
+                      onClick={handelLogOut}
+                      className="btn btn-outline text-primary hover:bg-primary hover:text-white"
+                    >
+                      Logout
+                    </button>
+                  ) : (
+                    <Link to="/login">
+                      <button className="btn btn-outline text-primary hover:bg-primary hover:text-white">
+                        Login Now
+                      </button>
+                    </Link>
+                  )}
                 </ul>
               </div>
             </div>

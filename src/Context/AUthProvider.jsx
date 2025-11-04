@@ -56,7 +56,6 @@ const AUthProvider = ({ children }) => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log("Data In Insart Of The JWT Tokens Cooking", data);
             localStorage.setItem("token", data.token)
           });
       }else{

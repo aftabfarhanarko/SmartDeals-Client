@@ -1,18 +1,18 @@
-import { useContext } from "react";
-import { AuthContex } from "../Context/AuthContex";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router";
+import {  useNavigate } from "react-router";
+import useAuth from "../Hooks/useAuth";
+import useAxiosSecure from '../Hooks/useAxiosSecure'
 
 const CreatProducat = () => {
-  const { user } = useContext(AuthContex);
-  const naviget = useNavigate()
-
+  const { user } = useAuth();
+  // const intences = useAxios();
+  const asioxSeoure = useAxiosSecure();
+   const naviget = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const title = e.target.title.value;
     const category = e.target.owenSteats.value;
-
     const price_min = e.target.minPrice.value;
     const price_max = e.target.maxPrice.value;
     const created_at = new Date();
@@ -44,27 +44,46 @@ const CreatProducat = () => {
       status,
       condition,
     };
-    
 
-    fetch("http://localhost:3000/producat", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(insertData),
+    // fetch("http://localhost:3000/producat", {
+    //   method: "POST",
+    //   headers: {
+    //     "content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(insertData),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     if (data.insertedId) {
+    //       Swal.fire({
+    //         title: "Save Database",
+    //         icon: "success",
+    //         draggable: true,
+    //       });
+    //       e.target.reset();
+    //       naviget("/allproduct");
+    //     }
+    //   });
+
+
+    //  intences.post("/producat",insertData)
+    //   .then(data => {
+    //     console.log('This is axios ', data.data);
+    //      if (data.data.insertedId) {
+    //       Swal.fire({
+    //         title: "Save Database",
+    //         icon: "success",
+    //         draggable: true,
+    //       });
+    //       e.target.reset();
+    //       naviget("/allproduct");
+    //     }
+    //   })
+
+    asioxSeoure.post('/producat', insertData)
+    .then(data => {
+      console.log('This is axios secure jwt token and from', data);
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.insertedId) {
-          Swal.fire({
-            title: "Save Database",
-            icon: "success",
-            draggable: true,
-          });
-          e.target.reset();
-          naviget("/allproduct")
-        }
-      });
   };
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100  px-4 sm:px-6 lg:px-8 py-19">
@@ -249,7 +268,7 @@ const CreatProducat = () => {
                   id="sellerEmail"
                   name="sellerEmail"
                   required
-                  disabled
+                  readOnly
                   defaultValue={user.email}
                   className={`w-full px-4 py-3 rounded-lg border  focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none  transition-all`}
                 />
@@ -284,7 +303,6 @@ const CreatProducat = () => {
                   type="url"
                   id="sellerImageUrl"
                   name="sellerImageUrl"
-
                   disabled
                   defaultValue={user.photoURL}
                   className="w-full px-4 py-3 rounded-lg border  focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none transition-all"
@@ -326,7 +344,6 @@ const CreatProducat = () => {
                   id="location"
                   name="location"
                   required
-
                   placeholder="City, Country"
                   className={`w-full px-4 py-3 rounded-lg border 
             border-black  focus:outline-none 

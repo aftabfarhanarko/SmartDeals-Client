@@ -1,11 +1,9 @@
-import React, { useContext } from "react";
-import { AuthContex } from "../Context/AuthContex";
 import { Navigate, useLocation } from "react-router";
+import useAuth from "../Hooks/useAuth";
 
 const PrivetRouter = ({ children }) => {
   const locations = useLocation();
-  const { user } = useContext(AuthContex);
-  // console.log(location);
+  const { user } = useAuth();
   if (user) {
     return children;
   } return<Navigate state={locations.pathname} to="/login"></Navigate>;

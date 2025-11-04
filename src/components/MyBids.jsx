@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContex } from "../Context/AuthContex";
+import React, {  useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import Loder from "./Loder";
+import useAuth from "../Hooks/useAuth";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const MyBids = () => {
-  const { user } = useContext(AuthContex);
+  const { user } = useAuth();
   const [bidesData, setBidesData] = useState([]);
-
-  // console.log(user.accessToken);
+  const axiosSecure = useAxiosSecure();
 
   // useEffect(() => {
   //   if (user.email) {
@@ -25,25 +25,33 @@ const MyBids = () => {
   // }, [user.email]);
 
   useEffect(() => {
-    if (user.email) {
-      fetch(`http://localhost:3000/bids?email=${user.email}`, {
-        headers: {
-          author: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("Reques Data ", data);
-          setBidesData(data);
-        });
-    }
-  }, [user.email]);
+  axiosSecure.get(`/bids?email=${user.email}`)
+  .then(data => {
+    console.log(data.data);
+    setBidesData(data.data)
+  })
+  },[user, axiosSecure])
 
+  //JWT token verify 
+  // useEffect(() => {
+  //   if (user.email) {
+  //     fetch(`http://localhost:3000/bids?email=${user.email}`, {
+  //       headers: {
+  //         author: `Bearer ${localStorage.getItem("token")}`,
+  //       },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log("Reques Data ", data);
+  //         setBidesData(data);
+  //       });
+  //   }
+  // }, [user.email]);
   const handelDelet = (_id) => {
     // console.log("Delet Now Buttons");
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "You won't be delete this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

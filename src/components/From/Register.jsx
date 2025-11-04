@@ -38,7 +38,7 @@ const Register = () => {
           })
             .then((res) => res.json())
             .then((data) => {
-              console.log("Login User Data Saved in MongoDB Database", data);
+              // console.log("Login User Data Saved in MongoDB Database", data);
             });
         });
       })

@@ -3,10 +3,10 @@ import { Link } from "react-router";
 
 const Card = ({ promiseProducat }) => {
   const producats = use(promiseProducat);
-  console.log(producats);
+  // console.log(producats);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mx-auto my-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mx-auto my-15">
       {producats.map((producat) => (
         <div
           key={producat._id}
@@ -29,7 +29,7 @@ const Card = ({ promiseProducat }) => {
 
           {/* Product Title */}
           <h2 className=" text-gray-800 font-semibold text-[15px] mb-1">
-            Yamaha Fz Guitar [ Full Fresh Condition ]{producat.title}
+         {producat.title}
           </h2>
 
           {/* Price */}

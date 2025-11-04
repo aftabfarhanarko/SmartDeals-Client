@@ -15,7 +15,7 @@ const Root = () => {
       <nav className="bg-base-100 shadow-sm ">
         <Navbar></Navbar>
       </nav>
-      <div className="h-[85px]"> </div>
+      <div className="h-[80px]"> </div>
 
       <main className="  ">
         <Outlet></Outlet>

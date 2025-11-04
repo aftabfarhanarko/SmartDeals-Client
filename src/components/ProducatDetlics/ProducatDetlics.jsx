@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {  useEffect, useRef, useState } from "react";
 import { GoArrowLeft } from "react-icons/go";
 import { Link, useLoaderData } from "react-router";
-import { AuthContex } from "../../Context/AuthContex";
 import { IoClose } from "react-icons/io5";
 import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
 
 const ProducatDetlics = () => {
   const producat = useLoaderData();
-  const { user } = useContext(AuthContex);
+  const { user } = useAuth();
   const [bides, setBides] = useState([]);
   const sdhsh = producat.created_at;
   const tashdo = new Date(sdhsh);
@@ -16,19 +16,32 @@ const ProducatDetlics = () => {
   const findesID = producat._id;
 
   console.log(producat);
-  
+
+  // // useEffect(() => {
+  //   axios.get(`http://localhost:3000/producat/bids/${findesID}`,{
+  // //     headers: {
+  // //   author: `Bearer ${user.accessToken}`,
+  // // },
+  //   })
+  //   .then(data => {
+  //     console.log('This is data from axios', data.data);
+  //     setBides(data.data)
+      
+  //   })
+  // // }, [findesID, user]);
+
   useEffect(() => {
-    fetch(`http://localhost:3000/producat/bids/${findesID}`,{
-        headers:{
-          author: `Bearer ${user.accessToken}`
-        }
+    fetch(`http://localhost:3000/producat/bids/${findesID}`, {
+      headers: {
+        author: `Bearer ${user.accessToken}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
         // console.log(data);
         setBides(data);
       });
-  }, [findesID,user]);
+  }, [findesID, user]);
 
   const handelModal = () => {
     refrence.current.showModal();
@@ -42,7 +55,7 @@ const ProducatDetlics = () => {
     const price = Number(e.target.price.value);
     // console.log({ email, price, name, images });
     const producatID = producat._id;
-    console.log(producatID);
+    // console.log(producatID);
 
     const bidesProducat = {
       producatIDS: producatID,
@@ -62,7 +75,7 @@ const ProducatDetlics = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("After The Data Inseart Of tHe producat in MongoDB", data);
+        // console.log("After The Data Inseart Of tHe producat in MongoDB", data);
         if (data.insertedId) {
           refrence.current.close();
           e.target.reset();
@@ -263,7 +276,9 @@ const ProducatDetlics = () => {
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
                   <div>
-                    <div className="font-semibold text-gray-900">{producat.seller_name}</div>
+                    <div className="font-semibold text-gray-900">
+                      {producat.seller_name}
+                    </div>
                     <div className="text-sm text-gray-600">{""}</div>
                   </div>
                 </div>
@@ -272,8 +287,7 @@ const ProducatDetlics = () => {
                 <div className="space-y-2 text-sm">
                   <div className="flex">
                     <span className="font-semibold text-gray-700  flex gap-2">
-                      Location: <span>
-                        {producat.location}</span>
+                      Location: <span>{producat.location}</span>
                     </span>
                     <span className="text-gray-600">{""}</span>
                   </div>
@@ -506,18 +520,17 @@ const ProducatDetlics = () => {
                       <div className="flex items-center gap-3">
                         <div className="avatar">
                           <div className="mask mask-squircle h-12 w-12">
-                            <img
-                              src={producat.image }
-                              alt="No Img"
-                            />
+                            <img src={producat.image} alt="No Img" />
                           </div>
-                            
-                          </div>
-                          <div>
-                            <p className="text-md  font-semibold">{producat.title}</p>
-                            <p className="font-medium">${producat.price_min}-{producat.price_max}</p>
                         </div>
-                        
+                        <div>
+                          <p className="text-md  font-semibold">
+                            {producat.title}
+                          </p>
+                          <p className="font-medium">
+                            ${producat.price_min}-{producat.price_max}
+                          </p>
+                        </div>
                       </div>
                     </td>
 
