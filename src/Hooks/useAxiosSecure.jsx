@@ -1,6 +1,7 @@
 import axios from "axios";
 import useAuth from "./useAuth";
 import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 const instance = axios.create({
   baseURL: "http://localhost:3000",
@@ -9,6 +10,7 @@ const instance = axios.create({
 
 const useAxiosSecure = () => {
   const { user, logOutUser } = useAuth();
+  const naviget = useNavigate();
   useEffect(() => {
     //   request interceptor
     const interceptorId = instance.interceptors.request.use((configs) => {
@@ -24,9 +26,11 @@ const useAxiosSecure = () => {
         return res;
       },
       (err) => {
-        const statusa = err.response?.status;
+        const statusa = err.status;
         if (statusa === 401 || statusa === 403) {
-          logOutUser();
+          logOutUser().then(() => {
+            naviget("/register");
+          });
         }
       }
     );
@@ -35,7 +39,7 @@ const useAxiosSecure = () => {
       instance.interceptors.request.eject(interceptorId);
       instance.interceptors.response.eject(responseIntercpted);
     };
-  }, [user, logOutUser]);
+  }, [user, logOutUser, naviget]);
 
   return instance;
 };

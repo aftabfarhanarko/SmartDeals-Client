@@ -15,12 +15,11 @@ const MyProducat = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          //   console.log("This is My Producat data");
+            console.log("This is My Producat data");
           setMyProducat(data);
         });
     }
   }, [user]);
-  console.log(producats);
 
   return (
     <div className="w-11/12 mx-auto">

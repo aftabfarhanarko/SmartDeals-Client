@@ -1,8 +1,9 @@
 import React, {  useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import Loder from "./Loder";
-import useAuth from "../Hooks/useAuth";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import useAuth from "../Hooks/useAuth";
+
 
 const MyBids = () => {
   const { user } = useAuth();
@@ -24,13 +25,17 @@ const MyBids = () => {
   //   }
   // }, [user.email]);
 
+
+  
   useEffect(() => {
   axiosSecure.get(`/bids?email=${user.email}`)
   .then(data => {
-    console.log(data.data);
+    // console.log(data.data);
     setBidesData(data.data)
   })
   },[user, axiosSecure])
+
+
 
   //JWT token verify 
   // useEffect(() => {
@@ -47,6 +52,8 @@ const MyBids = () => {
   //       });
   //   }
   // }, [user.email]);
+
+
   const handelDelet = (_id) => {
     // console.log("Delet Now Buttons");
     Swal.fire({
