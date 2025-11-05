@@ -1,4 +1,4 @@
-import React, {  useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GoArrowLeft } from "react-icons/go";
 import { Link, useLoaderData } from "react-router";
 import { IoClose } from "react-icons/io5";
@@ -15,20 +15,6 @@ const ProducatDetlics = () => {
   const refrence = useRef(null);
   const findesID = producat._id;
 
-  console.log(producat);
-
-  // // useEffect(() => {
-  //   axios.get(`http://localhost:3000/producat/bids/${findesID}`,{
-  // //     headers: {
-  // //   author: `Bearer ${user.accessToken}`,
-  // // },
-  //   })
-  //   .then(data => {
-  //     console.log('This is data from axios', data.data);
-  //     setBides(data.data)
-      
-  //   })
-  // // }, [findesID, user]);
 
   useEffect(() => {
     fetch(`http://localhost:3000/producat/bids/${findesID}`, {
@@ -38,14 +24,9 @@ const ProducatDetlics = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
         setBides(data);
       });
   }, [findesID, user]);
-
-  const handelModal = () => {
-    refrence.current.showModal();
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -75,7 +56,6 @@ const ProducatDetlics = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log("After The Data Inseart Of tHe producat in MongoDB", data);
         if (data.insertedId) {
           refrence.current.close();
           e.target.reset();
@@ -86,7 +66,6 @@ const ProducatDetlics = () => {
             showConfirmButton: false,
             timer: 1000,
           });
-
           // add new bids
           bidesProducat._id = data.insertedId;
           const myState = [...bides, bidesProducat];
@@ -96,7 +75,11 @@ const ProducatDetlics = () => {
       });
   };
 
-  // console.log(user);
+  const handelModal = () => {
+    refrence.current.showModal();
+  };
+
+  // console.log(bides);
 
   return (
     <div className="bg-base-200 py-15">

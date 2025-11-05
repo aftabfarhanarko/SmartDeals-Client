@@ -5,12 +5,12 @@ import { useNavigate } from "react-router";
 
 const instance = axios.create({
   baseURL: "http://localhost:3000",
-  withCredentials: true,
 });
 
 const useAxiosSecure = () => {
   const { user, logOutUser } = useAuth();
   const naviget = useNavigate();
+
   useEffect(() => {
     //   request interceptor
     const interceptorId = instance.interceptors.request.use((configs) => {
@@ -28,7 +28,8 @@ const useAxiosSecure = () => {
       (err) => {
         const statusa = err.status;
         if (statusa === 401 || statusa === 403) {
-          logOutUser().then(() => {
+          logOutUser()
+          .then(() => {
             naviget("/register");
           });
         }
